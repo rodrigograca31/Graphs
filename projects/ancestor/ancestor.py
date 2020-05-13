@@ -24,12 +24,12 @@ def earliest_ancestor(ancestors, starting_node):
     distance = 0
 
     # DFS - Depth Breadth First Search
-    q = deque()
-    q.append([starting_node])
+    s = deque()
+    s.append([starting_node])
     visited = set()
 
-    while len(q) > 0:
-        path = q.pop()
+    while len(s) > 0:
+        path = s.pop()
         v = path[-1]
 
         if v not in visited:
@@ -49,7 +49,7 @@ def earliest_ancestor(ancestors, starting_node):
             #     earliest = path
 
             # solution 2
-            if len(path) > distance:
+            if len(path) > distance or (len(path) == distance and v < earliest):
                 distance = len(path)
                 earliest = v
 
@@ -64,7 +64,7 @@ def earliest_ancestor(ancestors, starting_node):
 
             visited.add(v)
             for parent in get_parents(v):
-                q.append(path + [parent])
+                s.append(path + [parent])
 
     if earliest is not None:
         # if only visited 1 node means doesnt have parents
